@@ -1,0 +1,28 @@
+# Neural Network Play
+# 
+# This docker compose environment creates the web service and API 
+# 
+# Robert Curran, September 2018
+
+version: '3'
+
+services:
+
+   nodeNeuralNetAPI:
+    image: "node:8"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - API_PORT=5635
+    volumes:
+      - ./neuralNet:/home/node/app
+    ports:
+      - "5635:5635"
+    command: "npm start"
+
+   webServer:
+    ports: 
+      - "85:80"
+    image: nginx
+    volumes:
+       - ./webFrontEnd:/usr/share/nginx/html:ro
