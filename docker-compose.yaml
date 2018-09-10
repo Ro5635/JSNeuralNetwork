@@ -22,7 +22,7 @@ services:
 
    webServer:
     ports: 
-      - "85:80"
+      - "8085:80"
     image: nginx
     volumes:
        - ./webFrontEnd:/usr/share/nginx/html:ro
