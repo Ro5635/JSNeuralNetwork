@@ -10,4 +10,4 @@ webinterface: {localhost|dockerMachine IP}:8085 (eg http://localhost:8085)
 Neural Net API: {localhost|dockerMachine IP}:5635 (eg http://localhost:5635)
 
 
-Inspired by the excellent tutorial series by Mattias Johansson of [Fun Fun Function Youtube Channel]: https://youtu.be/o98qlvrcqiU
+Inspired by the excellent tutorial series by Mattias Johansson of [Fun Fun Function Youtube Channel](https://youtu.be/o98qlvrcqiU)
