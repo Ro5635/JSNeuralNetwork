@@ -23,4 +23,11 @@ router.get('/gridTest', function(req, res, next){
 
 });
 
+router.get('/getVisualByMath', function(req, res, next){
+
+	const generatedSVG = neuralNet.getVisualByMath();
+	res.send(generatedSVG);
+
+});
+
 module.exports = router;
