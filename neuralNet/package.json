@@ -17,7 +17,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"no tests\" && exit 0",
-    "start": "nodemon -L ./bin/www/js"
+    "start": "npm install && nodemon -L ./bin/www"
   },
   "author": "ro5635 robert Curran",
   "license": "ISC"
