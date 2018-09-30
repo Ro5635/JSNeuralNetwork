@@ -39,7 +39,7 @@ const neuralNetwork = (function() {
 		const learningFactor = 0.1;
 
 		// Create new ajusted weights
-		const adjustedWeights = {			// I am still a bit unsure about the inclusion of the point here...??
+		const adjustedWeights = {
 			x: weights.x + (point.x * error * learningFactor),
 			y: weights.y + (point.y * error * learningFactor)
 		}

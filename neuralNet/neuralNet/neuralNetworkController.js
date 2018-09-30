@@ -58,7 +58,7 @@ function convertToTeam(number) {
 * generating points and a final SVG diagram showing the data.
 *
 */
-exports.getVisual = () => {
+exports.getVisual = (X2Cord,Y2Cord) => {
 	
 	const correctExamples = getCorrectExamples(1500000, 0, 1100);
 	const randomWeights = neuralNetwork.getRandomWeigths();
@@ -76,7 +76,8 @@ exports.getVisual = () => {
 	         r="3"
 	         fill="${convertToTeam(neuralNetwork.guess(point, trainedWeights))}"/>`
 	    )}
-	    <line x1="0" x2="${X_MAX}" y1="0" y2="${Y_MAX}" stroke="purple" />
+
+	    <line x1="0" x2="${X2Cord}" y1="0" y2="${Y2Cord}" stroke="purple" />
 	  </svg>`;
 
 	return generatedSVG;
@@ -88,10 +89,11 @@ exports.getVisual = () => {
 * Gets a svg visual where the points are sorted into teams based on
 * mathematics. As a result is accurate and correct.
 */
-exports.getVisualByMath = () => {
+exports.getVisualByMath = (X2Cord,Y2Cord) => {
 	const randomPoints = pointsGenerator.getRandomPoints(300, 0, 1100);
 
 	const generatedSVG = `<svg width="${X_MAX}" height="${Y_MAX}">
+
 	   
 	${randomPoints.map(point => 
 	      `<circle 
@@ -100,10 +102,11 @@ exports.getVisualByMath = () => {
 	         r="3"
 	         fill="${convertToTeam(neuralNetwork.getAcurateTeam(point))}"/>`
 	    )}
-	    <line x1="0" x2="${X_MAX}" y1="0" y2="${Y_MAX}" stroke="purple" />
+
+	    <line x1="0" x2="${X2Cord}" y1="0" y2="${Y2Cord}" stroke="purple" />
 	  </svg>`;
 
-	return generatedSVG;
+	return '';// generatedSVG;
 }
 
 

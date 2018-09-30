@@ -18,14 +18,22 @@ router.get('/', function (req, res, next) {
 
 router.get('/gridTest', function(req, res, next){
 
-	const generatedSVG = neuralNetworkController.getVisual();
+	// No attempt at validation/security is made
+	const X_MAX  = req.query.xmax;
+	const Y_MAX =  req.query.ymax;
+
+
+	const generatedSVG = neuralNetworkController.getVisual(X_MAX, Y_MAX);
 	res.send(generatedSVG);
 
 });
 
 router.get('/getVisualByMath', function(req, res, next){
 
-	const generatedSVG = neuralNetworkController.getVisualByMath();
+	const X_MAX  = 1100;
+	const Y_MAX = 1100;
+
+	const generatedSVG = neuralNetworkController.getVisualByMath(X_MAX, Y_MAX);
 	res.send(generatedSVG);
 
 });
