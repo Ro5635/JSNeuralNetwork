@@ -20,12 +20,13 @@ const trigHelper = require('./Helpers/trigHelper');
 * Gets correct examples for use in training, this is possible because the problem is simple
 * enough to be solved with pure mathematics. 
 */
-function getCorrectExamples(numberToGet, gridMin, gridMax){
+function getCorrectExamples(numberToGet, decisionLine, gridMin, gridMax){
 
 	const generatedPoints = pointsGenerator.getRandomPoints(numberToGet, gridMin, gridMax);
 
 	for(const point of generatedPoints) {
-		const correctTeam = neuralNetwork.getAcurateTeam(point);
+
+		const correctTeam = neuralNetwork.getAcurateTeam(point, decisionLine);
 		
 		// Add the correct guess
 		point.correctGuess = correctTeam;
@@ -59,8 +60,10 @@ function convertToTeam(number) {
 *
 */
 exports.getVisual = (X_MAX, Y_MAX, decisionLineGradiant, decisionLineTranspose) => {
+
+	const decisionLine = {gradiant: 0.5, transpose: 8};//{gradiant: decisionLineGradiant, transpose: decisionLineTranspose};
 	
-	const correctExamples = getCorrectExamples(1500000, 0, X_MAX);
+	const correctExamples = getCorrectExamples(1500000, decisionLine, 0, X_MAX);
 	const randomWeights = neuralNetwork.getRandomWeigths();
 
 	const trainedWeights = neuralNetwork.getTrainedWeights(randomWeights, correctExamples);
@@ -70,10 +73,7 @@ exports.getVisual = (X_MAX, Y_MAX, decisionLineGradiant, decisionLineTranspose) 
 	const decisionLineX2Cord = 0;
 
 
-	let point = trigHelper.getPointOfGridEdgeIntercept({gradiant: 0.5, transpose: 8},Y_MAX, X_MAX);
-
-	console.error('Got a point');
-	console.error(point);
+	let gridEdgePoint = trigHelper.getPointOfGridEdgeIntercept(decisionLine,Y_MAX, X_MAX);
 
 	const generatedSVG = `<svg width="${X_MAX}" height="${Y_MAX}">
 
@@ -85,7 +85,7 @@ exports.getVisual = (X_MAX, Y_MAX, decisionLineGradiant, decisionLineTranspose) 
 	         fill="${convertToTeam(neuralNetwork.guess(point, trainedWeights))}"/>`
 	    )}
 
-	    <line x1="0" x2="${point.x}" y1="0" y2="${point.y}" stroke="purple" />
+	    <line x1="0" x2="${gridEdgePoint.x}" y1="0" y2="${gridEdgePoint.y}" stroke="purple" />
 	  </svg>`;
 
 	return generatedSVG;

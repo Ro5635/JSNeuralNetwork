@@ -5,14 +5,22 @@ const neuralNetwork = (function() {
 	*
 	* Gets the team that the point should be on based on pure
 	* mathematical reason.
+	* 
+	* point	Point object
+	* decisionLine Line object
 	*/
 	function getAcurateTeam(point, decisionLine) {
-		// if y > x you are above the line y=x
-		if (point.y > point.x) {
-			return 1;
-		} else {
-			return -1;
-		}
+
+		 let yValueAtPoint = (decisionLine.gradiant * point.x) + decisionLine.transpose;
+
+		 if (point.y > yValueAtPoint) {
+		 	// above the line
+		 	return 1;
+		 } 
+
+		 // below the line
+		 return -1;
+
 	} 
 
 
