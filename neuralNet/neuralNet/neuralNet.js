@@ -6,7 +6,7 @@ const neuralNetwork = (function() {
 	* Gets the team that the point should be on based on pure
 	* mathematical reason.
 	*/
-	function getAcurateTeam(point) {
+	function getAcurateTeam(point, decisionLine) {
 		// if y > x you are above the line y=x
 		if (point.y > point.x) {
 			return 1;
@@ -69,7 +69,7 @@ const neuralNetwork = (function() {
 	/**
 	* getTrainedWeights
 	*
-	* Takes weights and attempts to improve them by training them with teh provided correct examples
+	* Takes weights and attempts to improve them by training them with the provided correct examples
 	*/
 	function getTrainedWeights(startingWeights, correctExamples) {
 

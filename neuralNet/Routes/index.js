@@ -22,8 +22,11 @@ router.get('/gridTest', function(req, res, next){
 	const X_MAX  = req.query.xmax;
 	const Y_MAX =  req.query.ymax;
 
+	const decisionLineGradiant = req.query.decisionLineGradiant;
+	const decisionLineTranspose = req.query.decisionLineTranspose;
 
-	const generatedSVG = neuralNetworkController.getVisual(X_MAX, Y_MAX);
+
+	const generatedSVG = neuralNetworkController.getVisual(X_MAX, Y_MAX, decisionLineGradiant, decisionLineTranspose);
 	res.send(generatedSVG);
 
 });
