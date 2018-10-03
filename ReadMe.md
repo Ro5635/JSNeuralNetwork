@@ -1,3 +1,5 @@
+# A Neural Network Play Around
+
 This is a play around with creating a neural network, this is a simple one that deduces if a point is above or below a straight line in the form y=mx+c.
 It is structured as a Node Express API which produces a SVG with the runs results, this is made available on web interface via the nginx docker service.
 
