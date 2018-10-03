@@ -13,7 +13,7 @@ function getLastestSVG() {
 
 	// Wrap the fetch and response text resolve in a Promise
 
-	fetch(latestSVGResourceURL + '?xmax=800&ymax=1100')
+	fetch(latestSVGResourceURL + '?xmax=1100&ymax=1100&decisionLineGradiant=0.35&decisionLineTranspose=3')
 	.then( response => {
 		if (response.status !== 200) {
 			console.log('There was a problem. Status Code: ' +

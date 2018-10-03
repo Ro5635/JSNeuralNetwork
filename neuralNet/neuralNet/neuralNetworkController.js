@@ -59,9 +59,15 @@ function convertToTeam(number) {
 * generating points and a final SVG diagram showing the data.
 *
 */
-exports.getVisual = (X_MAX, Y_MAX, decisionLineGradiant, decisionLineTranspose) => {
+exports.getVisual = (input_X_MAX, input_Y_MAX, input_decisionLineGradiant, input_decisionLineTranspose) => {
 
-	const decisionLine = {gradiant: 0.5, transpose: 8};//{gradiant: decisionLineGradiant, transpose: decisionLineTranspose};
+	// Ensure no Javascript magic happens and make sure the numbers are numbers!
+	const X_MAX = parseFloat(input_X_MAX);
+	const Y_MAX = parseFloat(input_Y_MAX);
+	const decisionLineGradiant = parseFloat(input_decisionLineGradiant);
+	const decisionLineTranspose = parseFloat(input_decisionLineTranspose);
+
+	const decisionLine = {gradiant: decisionLineGradiant, transpose: decisionLineTranspose};
 	
 	const correctExamples = getCorrectExamples(1500000, decisionLine, 0, X_MAX);
 	const randomWeights = neuralNetwork.getRandomWeigths();
