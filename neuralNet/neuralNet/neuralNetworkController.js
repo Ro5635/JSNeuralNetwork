@@ -7,11 +7,11 @@
 
 const neuralNetwork = require('./neuralNet').getNetwork();
 const pointsGenerator = require('./pointsGenerator');
+const trigHelper = require('./Helpers/trigHelper');
 
-// Draw some points onto a grid
 
-const X_MAX  = 1100;
-const Y_MAX = 1100;
+// const X_MAX  = 1100;
+// const Y_MAX = 1100;
 
 
 /**
@@ -20,14 +20,15 @@ const Y_MAX = 1100;
 * Gets correct examples for use in training, this is possible because the problem is simple
 * enough to be solved with pure mathematics. 
 */
-function getCorrectExamples(numberToGet, gridMin, gridMax){
+function getCorrectExamples(numberToGet, decisionLine, gridMin, gridMax){
 
 	const generatedPoints = pointsGenerator.getRandomPoints(numberToGet, gridMin, gridMax);
 
 	for(const point of generatedPoints) {
-		const correctTeam = neuralNetwork.getAcurateTeam(point);
+
+		const correctTeam = neuralNetwork.getAcurateTeam(point, decisionLine);
 		
-		// Add the corerct guess
+		// Add the correct guess
 		point.correctGuess = correctTeam;
 
 	}
@@ -58,14 +59,27 @@ function convertToTeam(number) {
 * generating points and a final SVG diagram showing the data.
 *
 */
-exports.getVisual = () => {
+exports.getVisual = (input_X_MAX, input_Y_MAX, input_decisionLineGradiant, input_decisionLineTranspose) => {
+
+	// Ensure no Javascript magic happens and make sure the numbers are numbers!
+	const X_MAX = parseFloat(input_X_MAX);
+	const Y_MAX = parseFloat(input_Y_MAX);
+	const decisionLineGradiant = parseFloat(input_decisionLineGradiant);
+	const decisionLineTranspose = parseFloat(input_decisionLineTranspose);
+
+	const decisionLine = {gradiant: decisionLineGradiant, transpose: decisionLineTranspose};
 	
-	const correctExamples = getCorrectExamples(1500000, 0, 1100);
+	const correctExamples = getCorrectExamples(1500000, decisionLine, 0, X_MAX);
 	const randomWeights = neuralNetwork.getRandomWeigths();
 
 	const trainedWeights = neuralNetwork.getTrainedWeights(randomWeights, correctExamples);
 
-	const randomPoints = pointsGenerator.getRandomPoints(800, 0, 1100);
+	const randomPoints = pointsGenerator.getRandomPoints(800, 0, X_MAX);
+
+	const decisionLineX2Cord = 0;
+
+
+	let gridEdgePoint = trigHelper.getPointOfGridEdgeIntercept(decisionLine,Y_MAX, X_MAX);
 
 	const generatedSVG = `<svg width="${X_MAX}" height="${Y_MAX}">
 
@@ -76,11 +90,13 @@ exports.getVisual = () => {
 	         r="3"
 	         fill="${convertToTeam(neuralNetwork.guess(point, trainedWeights))}"/>`
 	    )}
-	    <line x1="0" x2="${X_MAX}" y1="0" y2="${Y_MAX}" stroke="purple" />
+
+	    <line x1="0" x2="${gridEdgePoint.x}" y1="0" y2="${gridEdgePoint.y}" stroke="purple" />
 	  </svg>`;
 
 	return generatedSVG;
 }
+
 
 /**
 * getVisualByMath
@@ -88,10 +104,11 @@ exports.getVisual = () => {
 * Gets a svg visual where the points are sorted into teams based on
 * mathematics. As a result is accurate and correct.
 */
-exports.getVisualByMath = () => {
+exports.getVisualByMath = (X2Cord, Y2Cord) => {
 	const randomPoints = pointsGenerator.getRandomPoints(300, 0, 1100);
 
 	const generatedSVG = `<svg width="${X_MAX}" height="${Y_MAX}">
+
 	   
 	${randomPoints.map(point => 
 	      `<circle 
@@ -100,10 +117,11 @@ exports.getVisualByMath = () => {
 	         r="3"
 	         fill="${convertToTeam(neuralNetwork.getAcurateTeam(point))}"/>`
 	    )}
-	    <line x1="0" x2="${X_MAX}" y1="0" y2="${Y_MAX}" stroke="purple" />
+
+	    <line x1="0" y1="0" x2="${X2Cord}" y2="${Y2Cord}" stroke="purple" />
 	  </svg>`;
 
-	return generatedSVG;
+	return '';// generatedSVG;
 }
 
 

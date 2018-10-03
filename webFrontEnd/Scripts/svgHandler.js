@@ -1,7 +1,7 @@
 /**
 * Fetches SVG from server and displays it on the page
 *
-*
+* Rough and ready code, will swap for angular if I take this project further 
 */
 
 const canvasTargetID = 'targetCanvas';
@@ -11,9 +11,11 @@ const latestSVGResourceURL = 'http://localhost:5635/gridTest';
 function getLastestSVG() {
 	return new Promise((resolve, reject) => {
 
-	// Wrap the fetch and response text resolve in a Promise
+	// Get the target params from the DOM
+	const targetLine = getTargetLineParams();
 
-	fetch(latestSVGResourceURL)
+	// Wrap the fetch and response text resolve in a Promise
+	fetch(latestSVGResourceURL + `?xmax=1100&ymax=1100&decisionLineGradiant=${targetLine.gradiant}&decisionLineTranspose=${targetLine.transpose}`)
 	.then( response => {
 		if (response.status !== 200) {
 			console.log('There was a problem. Status Code: ' +
@@ -54,6 +56,21 @@ function updateCanvas(){
 
 	})
 	
+}
+
+/**
+* getTargetLineParams
+*
+* Gets the params for the target line
+* from the DOM
+* returns Line 
+*/
+function getTargetLineParams(){
+	const lineGradiant = document.getElementById('targetGradiant').value;
+	const lineTranspose = document.getElementById('targetTranspose').value;
+console.log({gradiant: lineGradiant, transpose: lineTranspose});
+	return {gradiant: lineGradiant, transpose: lineTranspose};
+
 }
 
 setInterval(updateCanvas, 1000);

@@ -5,14 +5,22 @@ const neuralNetwork = (function() {
 	*
 	* Gets the team that the point should be on based on pure
 	* mathematical reason.
+	* 
+	* point	Point object
+	* decisionLine Line object
 	*/
-	function getAcurateTeam(point) {
-		// if y > x you are above the line y=x
-		if (point.y > point.x) {
-			return 1;
-		} else {
-			return -1;
-		}
+	function getAcurateTeam(point, decisionLine) {
+
+		 let yValueAtPoint = (decisionLine.gradiant * point.x) + decisionLine.transpose;
+
+		 if (point.y > yValueAtPoint) {
+		 	// above the line
+		 	return 1;
+		 } 
+
+		 // below the line
+		 return -1;
+
 	} 
 
 
@@ -39,7 +47,7 @@ const neuralNetwork = (function() {
 		const learningFactor = 0.1;
 
 		// Create new ajusted weights
-		const adjustedWeights = {			// I am still a bit unsure about the inclusion of the point here...??
+		const adjustedWeights = {
 			x: weights.x + (point.x * error * learningFactor),
 			y: weights.y + (point.y * error * learningFactor)
 		}
@@ -69,7 +77,7 @@ const neuralNetwork = (function() {
 	/**
 	* getTrainedWeights
 	*
-	* Takes weights and attempts to improve them by training them with teh provided correct examples
+	* Takes weights and attempts to improve them by training them with the provided correct examples
 	*/
 	function getTrainedWeights(startingWeights, correctExamples) {
 
