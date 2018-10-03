@@ -9,5 +9,7 @@ The web interface is made avalible on port 8085 as per the docker-compose enviro
 webinterface: {localhost|dockerMachine IP}:8085 (eg http://localhost:8085)
 Neural Net API: {localhost|dockerMachine IP}:5635 (eg http://localhost:5635)
 
+You can specify the equasion of the line that you want the network to train against, it will then display a visual showing the use
+of the generated network.
 
 Inspired by the excellent tutorial series by Mattias Johansson of [Fun Fun Function Youtube Channel]: https://youtu.be/o98qlvrcqiU
